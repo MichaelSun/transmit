@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
+		android:gravity="center_vertical|center_horizontal"
+  		android:textAppearance="?android:attr/textAppearanceLarge"
+  		android:text="@string/main_content"
+  		android:textColor="@drawable/gray1"/>
+    
+    <Button
+        android:id="@+id/send_msg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="150dp"
+        android:text="@string/send_msg"
+        android:textSize="18dp" />
+    
+	<Button
+        android:id="@+id/inbox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="80dp"
+        android:layout_below="@id/send_msg"
+        android:text="@string/inbox"
+        android:textSize="18dp" />
+        
+	<Button
+        android:id="@+id/outbox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_below="@id/inbox"
+        android:layout_marginTop="80dp"
+        android:text="@string/outbox"
+        android:textSize="18dp" />
+
+</RelativeLayout>

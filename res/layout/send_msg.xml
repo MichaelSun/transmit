@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/send_msg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+  		android:gravity="center_vertical|center_horizontal"
+  		android:textAppearance="?android:attr/textAppearanceLarge"
+  		android:textColor="@drawable/gray1"
+  		android:layout_alignParentTop="true"
+  		android:layout_marginTop="25dp"
+  		android:text="@string/send_msg"></TextView>
+
+    <EditText 
+        android:id="@+id/msg_content"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_below="@id/send_msg"
+        android:layout_marginTop="10dp" />
+    
+    <TextView 
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/msg_content"
+        android:singleLine="true"
+        android:layout_alignRight="@id/msg_content"
+        android:text="@string/tips_msg_count"></TextView>
+    
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="35dp">
+	    
+	    <Button
+	        android:id="@+id/send"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textSize="18dp"
+	        android:text="@string/btn_send"
+	        android:layout_marginRight="5dp" />
+	    <Button
+	        android:id="@+id/cancel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textSize="18dp"
+	        android:text="@string/btn_cancel"
+	        android:layout_marginLeft="5dp" />
+	</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">内部转发系统</string>
+    
+    <string name="send_msg">发送短信</string>
+    <string name="inbox">收件箱</string>
+    <string name="outbox">发件箱</string>
+    
+    <string name="main_content">智能转发系统:通信套件</string>
+    <string name="no_password_tips">注意:如无密码，请与管理员联系</string>
+    
+    <string name="login">登录密码</string>
+    <string name="password">密码</string>
+    
+    <string name="btn_cancel">取消</string>
+    <string name="btn_ok">确定</string>
+    <string name="btn_login">登录</string>
+    <string name="btn_send">发送</string>
+    
+    <string name="tips_msg_count">0/140</string>
+    
+    <string name="error_password">密码错误，请联系管理员</string>
+    <string name="empty_password">密码不能为空</string>
+    <string name="password_error_too_many">您已连续三次输入错误，软件将退出！</string>
+    <string name="send_content_empty">发送内容不能为空!</string>
+    <string name="send_content_success">短信发送成功</string>
+    
+    <string name="internal_password">123456</string>
+    
+    <string name="time_format" formatted="false">发送时间:%s</string>
+    <string name="content" formatted="false">短信内容:%s</string>
+</resources>
