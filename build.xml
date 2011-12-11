@@ -5,6 +5,10 @@
          It contains the path to the SDK. It should *NOT* be checked into
          Version Control Systems. -->
     <loadproperties srcFile="local.properties" />
+	    <property name="key.store" value="android.keystore" />
+		    <property name="key.alias" value="android.keystore" />
+			    <property name="key.store.password" value="123456" />
+				    <property name="key.alias.password" value="123456" />
 
     <!-- The ant.properties file can be created by you. It is only edited by the
          'android' tool to add properties to it.

@@ -101,25 +101,32 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050000;
-        public static final int btn_cancel=0x7f050008;
-        public static final int btn_login=0x7f05000a;
-        public static final int btn_ok=0x7f050009;
-        public static final int btn_send=0x7f05000b;
-        public static final int content=0x7f050014;
-        public static final int empty_password=0x7f05000e;
-        public static final int error_password=0x7f05000d;
-        public static final int inbox=0x7f050002;
-        public static final int internal_password=0x7f050012;
-        public static final int login=0x7f050006;
-        public static final int main_content=0x7f050004;
-        public static final int no_password_tips=0x7f050005;
-        public static final int outbox=0x7f050003;
-        public static final int password=0x7f050007;
-        public static final int password_error_too_many=0x7f05000f;
-        public static final int send_content_empty=0x7f050010;
-        public static final int send_content_success=0x7f050011;
+        public static final int back_tips=0x7f050007;
+        public static final int btn_back=0x7f05000b;
+        public static final int btn_cancel=0x7f05000a;
+        public static final int btn_delete=0x7f05000f;
+        public static final int btn_login=0x7f05000d;
+        public static final int btn_ok=0x7f05000c;
+        public static final int btn_reply=0x7f050010;
+        public static final int btn_send=0x7f05000e;
+        public static final int content=0x7f05001b;
+        public static final int empty_password=0x7f050013;
+        public static final int error_password=0x7f050012;
+        public static final int inbox=0x7f050003;
+        public static final int internal_password=0x7f050018;
+        public static final int login=0x7f050008;
+        public static final int main_content=0x7f050005;
+        public static final int no_password_tips=0x7f050006;
+        public static final int outbox=0x7f050004;
+        public static final int password=0x7f050009;
+        public static final int password_error_too_many=0x7f050014;
+        public static final int reply_msg=0x7f050002;
+        public static final int send_content_empty=0x7f050015;
+        public static final int send_content_success=0x7f050017;
+        public static final int send_content_too_long=0x7f050016;
         public static final int send_msg=0x7f050001;
-        public static final int time_format=0x7f050013;
-        public static final int tips_msg_count=0x7f05000c;
+        public static final int time_format=0x7f050019;
+        public static final int time_format_inbox=0x7f05001a;
+        public static final int tips_msg_count=0x7f050011;
     }
 }
