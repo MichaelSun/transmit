@@ -43,6 +43,7 @@ public class Splash extends Activity {
         protected Integer doInBackground(String...params) {
             try {
                 DatabaseOperator.getInstance().init(Splash.this.getApplicationContext());
+                SettingManager.getInstance().init(getApplicationContext());
                 Thread.sleep(3 * 1000);
             } catch (Exception e) {
             }

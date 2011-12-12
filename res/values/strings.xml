@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">内部转发系统</string>
+    <string name="app_name">智能转发系统</string>
     
     <string name="send_msg">发送短信</string>
     <string name="reply_msg">回复短信</string>
@@ -9,10 +9,11 @@
     
     <string name="main_content">智能转发系统:通信套件(SFS_A)</string>
     <string name="no_password_tips">注意:如无密码，请与管理员联系</string>
-    <string name="back_tips">如何返回，已编辑的内容将被取消，确认返回？</string>
+    <string name="back_tips">如果返回，已编辑内容将被丢弃，确认返回？</string>
     
     <string name="login">登录密码</string>
     <string name="password">密码</string>
+    <string name="setting">设置</string>
     
     <string name="btn_cancel">取消</string>
     <string name="btn_back">返回</string>
@@ -23,6 +24,7 @@
     <string name="btn_reply">回复</string>
     
     <string name="tips_msg_count">0/70</string>
+    <string name="tips_new_msg">有新信息</string>
     
     <string name="error_password">密码错误，请联系管理员</string>
     <string name="empty_password">密码不能为空</string>
@@ -32,8 +34,11 @@
     <string name="send_content_success">短信发送成功</string>
     
     <string name="internal_password">123456</string>
+    <string name="extend_category">中转号码设置</string>
+    <string name="target_num">电话号码</string>
+    <string name="pref_phone_num">phone_num</string>
     
     <string name="time_format" formatted="false">发送时间:%s</string>
     <string name="time_format_inbox" formatted="false">接收时间:%s</string>
-    <string name="content" formatted="false">短信内容:%s</string>
+    <string name="content" formatted="false">%s</string>
 </resources>

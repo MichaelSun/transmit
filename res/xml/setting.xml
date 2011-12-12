@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	<PreferenceCategory
+		android:title="@string/extend_category">
+		<EditTextPreference
+			android:title="@string/target_num"
+			android:key="@string/pref_phone_num"
+			android:dialogTitle="@string/target_num" >
+		</EditTextPreference>
+	</PreferenceCategory>
+	
+</PreferenceScreen>

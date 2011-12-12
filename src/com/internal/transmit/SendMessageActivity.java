@@ -43,7 +43,7 @@ public class SendMessageActivity extends Activity {
                             , Toast.LENGTH_LONG)
                     .show();
                     MessageInfo info = new MessageInfo();
-                    info.phone = Config.DEFAULT_NUM;
+                    info.phone = SettingManager.getInstance().getPhoneNum();
                     info.content = mContentET.getEditableText().toString();
                     info.time = Config.formatTime(System.currentTimeMillis());
                     DatabaseOperator.getInstance().insertOutboxInfo(info);
@@ -149,7 +149,9 @@ public class SendMessageActivity extends Activity {
                         return;
                     }
                     try {
-                        InternalUtils.sendMessage(SendMessageActivity.this, Config.DEFAULT_NUM, mSendContent);
+                        InternalUtils.sendMessage(SendMessageActivity.this
+                                        , SettingManager.getInstance().getPhoneNum() 
+                                        , mSendContent);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

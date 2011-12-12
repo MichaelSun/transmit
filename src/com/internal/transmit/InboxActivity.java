@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +34,9 @@ public class InboxActivity extends Activity {
         
         this.setTitle(getString(R.string.inbox));
         this.setContentView(R.layout.outbox);
+        SettingManager.getInstance().init(this);
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancelAll();
         
         mListView = (ListView) findViewById(R.id.list);
         mData = DatabaseOperator.getInstance().queryInbox();
