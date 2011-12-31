@@ -132,6 +132,13 @@ public class SendMessageActivity extends Activity {
                     } else {
                         finish();
                     }
+//                    try {
+//                        InternalUtils.sendMessageBySecondSIMCard(SendMessageActivity.this
+//                                        , SettingManager.getInstance().getPhoneNum() 
+//                                        , content);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
             }
         });
         
