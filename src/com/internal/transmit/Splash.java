@@ -19,10 +19,17 @@ public class Splash extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
             case SPLASH_END:
-                Intent mainIntent = new Intent();
-                mainIntent.setClass(getApplicationContext(), LoginActivity.class);
-                startActivity(mainIntent);
-                finish();
+                if (!Config.IS_CENTER_MODE) {
+                    Intent mainIntent = new Intent();
+                    mainIntent.setClass(getApplicationContext(), LoginActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+                } else {
+                    Intent target = new Intent();
+                    target.setClass(getApplicationContext(), TargetSettingActivity.class);
+                    startActivity(target);
+                    finish();
+                }
                 break;
             }
         }

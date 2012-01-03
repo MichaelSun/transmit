@@ -79,6 +79,7 @@ public final class R {
         public static final int white=0x7f020007;
     }
     public static final class id {
+        public static final int add=0x7f07000f;
         public static final int cancel=0x7f07000c;
         public static final int content=0x7f070001;
         public static final int count=0x7f07000a;
@@ -92,6 +93,7 @@ public final class R {
         public static final int send=0x7f07000b;
         public static final int send_msg=0x7f070004;
         public static final int setting=0x7f070007;
+        public static final int text=0x7f07000e;
         public static final int time=0x7f070000;
     }
     public static final class layout {
@@ -102,8 +104,12 @@ public final class R {
         public static final int outbox=0x7f030004;
         public static final int send_msg=0x7f030005;
         public static final int start_activity=0x7f030006;
+        public static final int target_list_item=0x7f030007;
+        public static final int target_menu=0x7f030008;
     }
     public static final class string {
+        public static final int add_error_tips=0x7f060020;
+        public static final int add_target=0x7f06001e;
         public static final int app_name=0x7f060000;
         public static final int back_tips=0x7f060007;
         public static final int btn_back=0x7f06000c;
@@ -113,7 +119,8 @@ public final class R {
         public static final int btn_ok=0x7f06000d;
         public static final int btn_reply=0x7f060011;
         public static final int btn_send=0x7f06000f;
-        public static final int content=0x7f060020;
+        public static final int content=0x7f060025;
+        public static final int delete_tips=0x7f06001f;
         public static final int empty_password=0x7f060015;
         public static final int error_password=0x7f060014;
         public static final int extend_category=0x7f06001b;
@@ -125,7 +132,8 @@ public final class R {
         public static final int outbox=0x7f060004;
         public static final int password=0x7f060009;
         public static final int password_error_too_many=0x7f060016;
-        public static final int pref_phone_num=0x7f06001d;
+        public static final int pref_phone_num=0x7f060021;
+        public static final int pref_target_list=0x7f060022;
         public static final int reply_msg=0x7f060002;
         public static final int send_content_empty=0x7f060017;
         public static final int send_content_success=0x7f060019;
@@ -133,10 +141,11 @@ public final class R {
         public static final int send_msg=0x7f060001;
         public static final int setting=0x7f06000a;
         public static final int target_num=0x7f06001c;
-        public static final int time_format=0x7f06001e;
-        public static final int time_format_inbox=0x7f06001f;
+        public static final int time_format=0x7f060023;
+        public static final int time_format_inbox=0x7f060024;
         public static final int tips_msg_count=0x7f060012;
         public static final int tips_new_msg=0x7f060013;
+        public static final int title_convert=0x7f06001d;
     }
     public static final class xml {
         public static final int setting=0x7f040000;

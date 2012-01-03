@@ -36,7 +36,13 @@
     <string name="internal_password">123456</string>
     <string name="extend_category">中转号码设置</string>
     <string name="target_num">电话号码</string>
+    <string name="title_convert">中转中心电话列表</string>
+    <string name="add_target">增加发送目标</string>
+    <string name="delete_tips">是否删除此电话号码?</string>
+    <string name="add_error_tips">输入的电话号码错误,请从新输入.</string>
+    
     <string name="pref_phone_num">phone_num</string>
+    <string name="pref_target_list">target_list</string>
     
     <string name="time_format" formatted="false">发送时间:%s</string>
     <string name="time_format_inbox" formatted="false">接收时间:%s</string>

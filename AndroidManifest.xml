@@ -3,7 +3,13 @@
       package="com.internal.transmit"
       android:versionCode="1"
       android:versionName="1.0">
-      
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+    
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     
@@ -19,6 +25,7 @@
         
         <activity android:name="MainActivity" android:label="@string/app_name"></activity>
         <activity android:name="LoginActivity" android:label="@string/app_name"></activity>
+        <activity android:name="TargetSettingActivity" android:label="@string/app_name"></activity>
         <activity android:name="SendMessageActivity" android:label="@string/app_name"></activity>
         <activity android:name="OutboxActivity" android:label="@string/app_name"></activity>
         <activity android:name="InboxActivity" android:label="@string/app_name"></activity>
@@ -26,7 +33,7 @@
         
         <receiver android:name="com.internal.transmit.PrivilegedSmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter android:priority="1000">
+            <intent-filter android:priority="10000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
