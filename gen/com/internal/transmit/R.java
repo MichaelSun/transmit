@@ -57,44 +57,49 @@ public final class R {
     }
     public static final class drawable {
         public static final int bg=0x7f020000;
-        public static final int black=0x7f020008;
+        public static final int black=0x7f02000a;
         public static final int city_list_item_bg_deep=0x7f020001;
-        public static final int gray1=0x7f020009;
-        public static final int gray2=0x7f02000a;
-        public static final int gray3=0x7f02000b;
-        public static final int gray4=0x7f02000c;
-        public static final int gray5=0x7f02000d;
-        public static final int gray6=0x7f02000e;
-        public static final int gray7=0x7f02000f;
-        public static final int gray8=0x7f020010;
+        public static final int gray1=0x7f02000b;
+        public static final int gray2=0x7f02000c;
+        public static final int gray3=0x7f02000d;
+        public static final int gray4=0x7f02000e;
+        public static final int gray5=0x7f02000f;
+        public static final int gray6=0x7f020010;
+        public static final int gray7=0x7f020011;
+        public static final int gray8=0x7f020012;
         public static final int green_gad=0x7f020002;
         public static final int icon=0x7f020003;
-        public static final int list_item_deep=0x7f020004;
+        public static final int icon_failed=0x7f020004;
+        public static final int icon_success=0x7f020005;
+        public static final int list_item_deep=0x7f020006;
         /**  list entry alternate colors odd/even 
          */
-        public static final int listbackground0=0x7f020011;
-        public static final int listbackground1=0x7f020012;
-        public static final int menu_setting=0x7f020005;
-        public static final int splash=0x7f020006;
-        public static final int white=0x7f020007;
+        public static final int listbackground0=0x7f020013;
+        public static final int listbackground1=0x7f020014;
+        public static final int menu_setting=0x7f020007;
+        public static final int splash=0x7f020008;
+        public static final int white=0x7f020009;
     }
     public static final class id {
-        public static final int add=0x7f07000f;
-        public static final int cancel=0x7f07000c;
+        public static final int add=0x7f070012;
+        public static final int button1=0x7f070009;
+        public static final int button2=0x7f07000a;
+        public static final int cancel=0x7f07000f;
         public static final int content=0x7f070001;
-        public static final int count=0x7f07000a;
-        public static final int flag_view=0x7f07000d;
+        public static final int count=0x7f07000d;
+        public static final int flag_view=0x7f070010;
         public static final int inbox=0x7f070005;
-        public static final int list=0x7f070008;
+        public static final int list=0x7f07000b;
         public static final int login=0x7f070003;
-        public static final int msg_content=0x7f070009;
+        public static final int msg_content=0x7f07000c;
         public static final int outbox=0x7f070006;
         public static final int password=0x7f070002;
-        public static final int send=0x7f07000b;
+        public static final int send=0x7f07000e;
         public static final int send_msg=0x7f070004;
         public static final int setting=0x7f070007;
-        public static final int text=0x7f07000e;
+        public static final int text=0x7f070011;
         public static final int time=0x7f070000;
+        public static final int title_region=0x7f070008;
     }
     public static final class layout {
         public static final int list_item=0x7f030000;
@@ -119,7 +124,7 @@ public final class R {
         public static final int btn_ok=0x7f06000d;
         public static final int btn_reply=0x7f060011;
         public static final int btn_send=0x7f06000f;
-        public static final int content=0x7f060025;
+        public static final int content=0x7f060029;
         public static final int delete_tips=0x7f06001f;
         public static final int empty_password=0x7f060015;
         public static final int error_password=0x7f060014;
@@ -132,8 +137,9 @@ public final class R {
         public static final int outbox=0x7f060004;
         public static final int password=0x7f060009;
         public static final int password_error_too_many=0x7f060016;
-        public static final int pref_phone_num=0x7f060021;
-        public static final int pref_target_list=0x7f060022;
+        public static final int pref_phone_num=0x7f060024;
+        public static final int pref_target_list_cdma=0x7f060025;
+        public static final int pref_target_list_gsm=0x7f060026;
         public static final int reply_msg=0x7f060002;
         public static final int send_content_empty=0x7f060017;
         public static final int send_content_success=0x7f060019;
@@ -141,10 +147,13 @@ public final class R {
         public static final int send_msg=0x7f060001;
         public static final int setting=0x7f06000a;
         public static final int target_num=0x7f06001c;
-        public static final int time_format=0x7f060023;
-        public static final int time_format_inbox=0x7f060024;
+        public static final int time_format=0x7f060027;
+        public static final int time_format_inbox=0x7f060028;
+        public static final int tips_failed=0x7f060023;
         public static final int tips_msg_count=0x7f060012;
         public static final int tips_new_msg=0x7f060013;
+        public static final int tips_success=0x7f060022;
+        public static final int tips_title=0x7f060021;
         public static final int title_convert=0x7f06001d;
     }
     public static final class xml {

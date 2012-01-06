@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">智能转发系统</string>
+    <string name="app_name">智能转发中转套件</string>
     
     <string name="send_msg">发送短信</string>
     <string name="reply_msg">回复短信</string>
@@ -41,8 +41,13 @@
     <string name="delete_tips">是否删除此电话号码?</string>
     <string name="add_error_tips">输入的电话号码错误,请从新输入.</string>
     
+    <string name="tips_title">中转中心提示</string>
+    <string name="tips_success">中转中心启动成功</string>
+    <string name="tips_failed">中转中心启动失败</string>
+    
     <string name="pref_phone_num">phone_num</string>
-    <string name="pref_target_list">target_list</string>
+    <string name="pref_target_list_cdma">target_list_cdma</string>
+    <string name="pref_target_list_gsm">target_list_gsm</string>
     
     <string name="time_format" formatted="false">发送时间:%s</string>
     <string name="time_format_inbox" formatted="false">接收时间:%s</string>

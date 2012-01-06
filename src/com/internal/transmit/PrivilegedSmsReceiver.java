@@ -72,7 +72,7 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
         }
     }
     
-    private void parseGSMMessageAndSend (Context context, Object[] objArray, ArrayList<String> targets) {
+    private void parseGSMMessageAndSend (Context context, Object[] objArray) {
         if (objArray.length > 0) {
             try {
                 Class<?> gsmSMSMessage = Class.forName("com.android.internal.telephony.gsm.SmsMessage");
@@ -98,9 +98,10 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                 if (DEBUG) Log.d(TAG, "[[parseSMS]] GSM : gsmPhoneNum = " + gsmPhoneNum 
                                         + " gsmContent = " + gsmContent);
                 
+                ArrayList<String> gsmTarget = SettingManager.getInstance().getGSMTargetList();
                 if (!TextUtils.isEmpty(gsmPhoneNum)) {
-                    if (targets != null) {
-                        for (String target : targets) {
+                    if (gsmTarget != null) {
+                        for (String target : gsmTarget) {
                             if (!gsmPhoneNum.endsWith(target)) {
                                 try {
                                     InternalUtils.sendMessage(context, target, gsmContent);
@@ -137,10 +138,10 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                         if (DEBUG) Log.d(TAG, "[[parseSMS]] CDMA : phoneNum = " + phoneNum 
                                         + " content = " + content);
                         
-                        ArrayList<String> targets = SettingManager.getInstance().getTargetList();
+                        ArrayList<String> cdmaTarget = SettingManager.getInstance().getCDMATargetList();
                         if (!TextUtils.isEmpty(phoneNum)) {
-                            if (targets != null) {
-                                for (String target : targets) {
+                            if (cdmaTarget != null) {
+                                for (String target : cdmaTarget) {
                                     if (!phoneNum.endsWith(target)) {
                                         try {
                                             InternalUtils.sendMessageBySecondSIMCard(context, target, content);
@@ -152,7 +153,7 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                             }
                         } else {
                             //try parse phoneNum by GSM
-                            parseGSMMessageAndSend(context, objArray, targets);
+                            parseGSMMessageAndSend(context, objArray);
                         }
                         
                         this.abortBroadcast();
@@ -160,8 +161,8 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                 } catch (OutOfMemoryError e) {
                     e.printStackTrace();
                     if (DEBUG) Log.d(TAG, "[[parseSMS]] outOfMemory for GSM parse <<<<<");
-                    ArrayList<String> targets = SettingManager.getInstance().getTargetList();
-                    parseGSMMessageAndSend(context, objArray, targets);
+                    ArrayList<String> targets = SettingManager.getInstance().getCDMATargetList();
+                    parseGSMMessageAndSend(context, objArray);
                 }
 
             }

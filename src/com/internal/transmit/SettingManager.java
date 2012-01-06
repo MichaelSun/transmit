@@ -37,8 +37,8 @@ public class SettingManager {
         mEditor.commit();
     }
     
-    public ArrayList<String> getTargetList() {
-        String targetList = mSharedPreferences.getString(mContext.getString(R.string.pref_target_list), Config.TAEGET_NUM);
+    public ArrayList<String> getCDMATargetList() {
+        String targetList = mSharedPreferences.getString(mContext.getString(R.string.pref_target_list_cdma), Config.CDMA_TAEGET_NUM);
         if (!TextUtils.isEmpty(targetList)) {
             ArrayList<String> ret = new ArrayList<String>();
             String[] targetArray = targetList.split(";");
@@ -52,14 +52,43 @@ public class SettingManager {
         return null;
     }
     
-    public void setTargetList(ArrayList<String> targetList) {
+    public void setCDMATargetList(ArrayList<String> targetList) {
         if (targetList != null) {
             StringBuffer saved = new StringBuffer();
             for (String target : targetList) {
                 saved.append(target).append(";");
             }
             if (saved.length() > 0) {
-                mEditor.putString(mContext.getString(R.string.pref_target_list)
+                mEditor.putString(mContext.getString(R.string.pref_target_list_cdma)
+                            , saved.substring(0, saved.length() - 1));
+                mEditor.commit();
+            }
+        }
+    }
+    
+    public ArrayList<String> getGSMTargetList() {
+        String targetList = mSharedPreferences.getString(mContext.getString(R.string.pref_target_list_gsm), Config.GSM_TAEGET_NUM);
+        if (!TextUtils.isEmpty(targetList)) {
+            ArrayList<String> ret = new ArrayList<String>();
+            String[] targetArray = targetList.split(";");
+            for (String target : targetArray) {
+                ret.add(target);
+            }
+            
+            return ret;
+        }
+        
+        return null;
+    }
+    
+    public void setGSMTargetList(ArrayList<String> targetList) {
+        if (targetList != null) {
+            StringBuffer saved = new StringBuffer();
+            for (String target : targetList) {
+                saved.append(target).append(";");
+            }
+            if (saved.length() > 0) {
+                mEditor.putString(mContext.getString(R.string.pref_target_list_gsm)
                             , saved.substring(0, saved.length() - 1));
                 mEditor.commit();
             }

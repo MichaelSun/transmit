@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,8 +28,34 @@ public class TargetSettingActivity extends Activity {
 
     private ListView mList;
     private TargetInfoAdapter mAdapter;
-    private ArrayList<String> mTargetList;
     private EditText mEditText;
+    private Button mGSMListButton;
+    private Button mCDMAListButton;
+    private ArrayList<String> mGSMList;
+    private ArrayList<String> mCDMAList;
+    private boolean mShowCMDA;
+    
+    private static final int REFRESH_LIST = 0;
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+            case REFRESH_LIST:
+                if (mShowCMDA) {
+                    if (mCDMAList != null) {
+                        mAdapter = new TargetInfoAdapter(TargetSettingActivity.this, R.layout.target_list_item, mCDMAList);
+                        mList.setAdapter(mAdapter);
+                    }
+                } else {
+                    if (mGSMList != null) {
+                        mAdapter = new TargetInfoAdapter(TargetSettingActivity.this, R.layout.target_list_item, mGSMList);
+                        mList.setAdapter(mAdapter);
+                    }
+                }
+                break;
+            }
+        }
+    };
+    
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,28 +64,51 @@ public class TargetSettingActivity extends Activity {
         this.setTitle(R.string.title_convert);
         
         this.setContentView(R.layout.outbox);
-        mList = (ListView) findViewById(R.id.list);
-        mTargetList = SettingManager.getInstance().getTargetList();
-        if (mTargetList != null) {
-            mAdapter = new TargetInfoAdapter(this, R.layout.target_list_item, mTargetList);
-            mList.setAdapter(mAdapter);
-        }
+        View buttonRegion = findViewById(R.id.title_region);
+        buttonRegion.setVisibility(View.VISIBLE);
+        mCDMAListButton = (Button) buttonRegion.findViewById(R.id.button1);
+        mGSMListButton = (Button) buttonRegion.findViewById(R.id.button2);
+        mGSMList = SettingManager.getInstance().getGSMTargetList();
+        mCDMAList = SettingManager.getInstance().getCDMATargetList();
+        mShowCMDA = true;
         
+        mCDMAListButton.setText("CDMA");
+        mCDMAListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mShowCMDA = true;
+                mHandler.sendEmptyMessage(REFRESH_LIST);
+            }
+        });
+        mGSMListButton.setText("GSM");
+        mGSMListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mShowCMDA = false;
+                mHandler.sendEmptyMessage(REFRESH_LIST);
+            }
+        });
+        
+        mList = (ListView) findViewById(R.id.list);
         mList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                if (position < mTargetList.size()) {
+                ArrayList<String> targetList = mShowCMDA ? mCDMAList : mGSMList;
+                
+                if (position < targetList.size()) {
                     AlertDialog dialog = new AlertDialog.Builder(TargetSettingActivity.this)
                                                 .setMessage(R.string.delete_tips)
                                                 .setPositiveButton(R.string.btn_ok, 
                                                         new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
-                                                                mTargetList.remove(position);
-                                                                SettingManager.getInstance().setTargetList(mTargetList);
-                                                                if (mTargetList != null) {
-                                                                    mAdapter = new TargetInfoAdapter(TargetSettingActivity.this, R.layout.target_list_item, mTargetList);
-                                                                    mList.setAdapter(mAdapter);
+                                                                if (mShowCMDA) {
+                                                                    mCDMAList.remove(position);
+                                                                    SettingManager.getInstance().setCDMATargetList(mCDMAList);
+                                                                } else {
+                                                                    mGSMList.remove(position);
+                                                                    SettingManager.getInstance().setGSMTargetList(mGSMList);
                                                                 }
+                                                                mHandler.sendEmptyMessage(REFRESH_LIST);
                                                             }
                                                         })
                                                 .setNegativeButton(R.string.btn_cancel, null)
@@ -67,6 +119,8 @@ public class TargetSettingActivity extends Activity {
                 return true;
             }
         });
+        
+        mHandler.sendEmptyMessage(REFRESH_LIST);
     }
     
     @Override
@@ -105,14 +159,18 @@ public class TargetSettingActivity extends Activity {
                                                     String phone = mEditText.getEditableText().toString();
                                                     if (!TextUtils.isEmpty(phone)
                                                             && phone.length() == 11) {
-                                                        if (!mTargetList.contains(phone)) {
-                                                            mTargetList.add(phone);
-                                                            SettingManager.getInstance().setTargetList(mTargetList);
-                                                            if (mTargetList != null) {
-                                                                mAdapter = new TargetInfoAdapter(TargetSettingActivity.this, R.layout.target_list_item, mTargetList);
-                                                                mList.setAdapter(mAdapter);
+                                                        if (mShowCMDA) {
+                                                            if (!mCDMAList.contains(phone)) {
+                                                                mCDMAList.add(phone);
+                                                                SettingManager.getInstance().setCDMATargetList(mCDMAList);
+                                                            }
+                                                        } else {
+                                                            if (!mGSMList.contains(phone)) {
+                                                                mGSMList.add(phone);
+                                                                SettingManager.getInstance().setGSMTargetList(mGSMList);
                                                             }
                                                         }
+                                                        mHandler.sendEmptyMessage(REFRESH_LIST);
                                                     } else {
                                                         Toast.makeText(TargetSettingActivity.this, R.string.add_error_tips, Toast.LENGTH_LONG).show();
                                                     }
