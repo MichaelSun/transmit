@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,11 +42,13 @@ public class TargetSettingActivity extends Activity {
             switch (msg.what) {
             case REFRESH_LIST:
                 if (mShowCMDA) {
+                    setTitle(String.format(getString(R.string.title_convert), getString(R.string.cdma)));
                     if (mCDMAList != null) {
                         mAdapter = new TargetInfoAdapter(TargetSettingActivity.this, R.layout.target_list_item, mCDMAList);
                         mList.setAdapter(mAdapter);
                     }
                 } else {
+                    setTitle(String.format(getString(R.string.title_convert), getString(R.string.gsm)));
                     if (mGSMList != null) {
                         mAdapter = new TargetInfoAdapter(TargetSettingActivity.this, R.layout.target_list_item, mGSMList);
                         mList.setAdapter(mAdapter);
@@ -61,8 +64,7 @@ public class TargetSettingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        this.setTitle(R.string.title_convert);
-        
+        setTitle(String.format(getString(R.string.title_convert), getString(R.string.cdma)));
         this.setContentView(R.layout.outbox);
         View buttonRegion = findViewById(R.id.title_region);
         buttonRegion.setVisibility(View.VISIBLE);
@@ -141,6 +143,22 @@ public class TargetSettingActivity extends Activity {
         switch (item.getItemId()) {
         case R.id.add:
             showAddTargetDialog();
+            break;
+        case R.id.cdma_log:
+            {
+                Intent log = new Intent();
+                log.setClass(getApplicationContext(), SMSLogActivity.class);
+                log.putExtra(SMSLogActivity.SMS_TYPE, true);
+                startActivity(log);
+            }
+            break;
+        case R.id.gsm_log:
+            {
+                Intent log = new Intent();
+                log.setClass(getApplicationContext(), SMSLogActivity.class);
+                log.putExtra(SMSLogActivity.SMS_TYPE, false);
+                startActivity(log);
+            }
             break;
         }
         

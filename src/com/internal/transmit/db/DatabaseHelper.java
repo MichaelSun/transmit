@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.internal.transmit.Config;
+
 class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "info.db";
@@ -16,8 +18,13 @@ class DatabaseHelper extends SQLiteOpenHelper {
     
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DataBaseConfig.INBOX_DATABASE_CREATE);
-        db.execSQL(DataBaseConfig.OUTBOX_DATABASE_CREATE);
+        if (!Config.IS_CENTER_MODE) {
+            db.execSQL(DataBaseConfig.INBOX_DATABASE_CREATE);
+            db.execSQL(DataBaseConfig.OUTBOX_DATABASE_CREATE);
+        } else {
+            db.execSQL(DataBaseConfig.RECEIVED_CDMA_LOG_TABLE);
+            db.execSQL(DataBaseConfig.RECEIVED_GSM_LOG_TABLE);
+        }
     }
 
     @Override
@@ -25,6 +32,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
         if(newVersion <= 2) {
             db.execSQL("DROP TABLE IF EXISTS " + DataBaseConfig.INBOX_DATABASE_CREATE);
             db.execSQL("DROP TABLE IF EXISTS " + DataBaseConfig.OUTBOX_DATABASE_CREATE);
+            db.execSQL("DROP TABLE IF EXISTS " + DataBaseConfig.RECEIVED_CDMA_LOG_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + DataBaseConfig.RECEIVED_GSM_LOG_TABLE);
             onCreate(db);
         }
     }

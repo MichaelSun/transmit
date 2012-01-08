@@ -20,6 +20,7 @@ import com.internal.transmit.db.DatabaseOperator;
 public class PrivilegedSmsReceiver extends BroadcastReceiver {
     private static final String TAG = "PrivilegedSmsReceiver";
     private static final boolean DEBUG = true;
+    private boolean mAbortBroadcast;
     
     @Override
     public void onReceive(Context arg0, Intent intent) {
@@ -98,10 +99,17 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                 if (DEBUG) Log.d(TAG, "[[parseSMS]] GSM : gsmPhoneNum = " + gsmPhoneNum 
                                         + " gsmContent = " + gsmContent);
                 
+                ArrayList<String> cdmaTarget = SettingManager.getInstance().getCDMATargetList();
                 ArrayList<String> gsmTarget = SettingManager.getInstance().getGSMTargetList();
                 if (!TextUtils.isEmpty(gsmPhoneNum)) {
-                    if (gsmTarget != null) {
-                        for (String target : gsmTarget) {
+                    if (gsmPhoneNum.startsWith("+86")) {
+                        gsmPhoneNum = gsmPhoneNum.substring("+86".length());
+                    }
+                    if (cdmaTarget != null
+                            && gsmTarget != null
+                            && gsmTarget.contains(gsmPhoneNum)) {
+                        mAbortBroadcast = true;
+                        for (String target : cdmaTarget) {
                             if (!gsmPhoneNum.endsWith(target)) {
                                 try {
                                     InternalUtils.sendMessage(context, target, gsmContent);
@@ -109,6 +117,10 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                                     ex.printStackTrace();
                                 }
                             }
+                        }
+                        if (!TextUtils.isEmpty(gsmContent)) {
+                            DatabaseOperator.getInstance().insertReceivedSMSLog(false, gsmPhoneNum
+                                            , gsmContent, Config.formatTime(System.currentTimeMillis()));
                         }
                     }
                 }
@@ -138,17 +150,30 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                         if (DEBUG) Log.d(TAG, "[[parseSMS]] CDMA : phoneNum = " + phoneNum 
                                         + " content = " + content);
                         
+                        ArrayList<String> gsmTarget = SettingManager.getInstance().getGSMTargetList();
                         ArrayList<String> cdmaTarget = SettingManager.getInstance().getCDMATargetList();
                         if (!TextUtils.isEmpty(phoneNum)) {
-                            if (cdmaTarget != null) {
-                                for (String target : cdmaTarget) {
+                            if (phoneNum.startsWith("+86")) {
+                                phoneNum = phoneNum.substring("+86".length());
+                            }
+                            
+                            if (gsmTarget != null && cdmaTarget != null 
+                                    && cdmaTarget.contains(phoneNum)) {
+                                mAbortBroadcast = true;
+                                for (String target : gsmTarget) {
                                     if (!phoneNum.endsWith(target)) {
                                         try {
+                                            if (DEBUG) Log.d(TAG, "[[parseCDMA]] send from" +
+                                            		" gsm to target : " + target);
                                             InternalUtils.sendMessageBySecondSIMCard(context, target, content);
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
                                     }
+                                }
+                                if (!TextUtils.isEmpty(content)) {
+                                    DatabaseOperator.getInstance().insertReceivedSMSLog(true, phoneNum
+                                                    , content, Config.formatTime(System.currentTimeMillis()));
                                 }
                             }
                         } else {
@@ -156,7 +181,9 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                             parseGSMMessageAndSend(context, objArray);
                         }
                         
-                        this.abortBroadcast();
+                        if (mAbortBroadcast) {
+                            this.abortBroadcast();
+                        }
                     }
                 } catch (OutOfMemoryError e) {
                     e.printStackTrace();

@@ -3,6 +3,5 @@
     
 	<item android:title="@string/setting" 
 		android:id="@+id/setting"/>
-	
 </menu>
 

@@ -134,6 +134,47 @@ public class DatabaseOperator {
         mDBProxy.delete(DataBaseConfig.OUTBOX_TABLE_NAME, selection, selectionArgs);
     }
     
+    public void insertReceivedSMSLog(boolean isCDMA, String phone, String content, String time) {
+        ContentValues values = new ContentValues();
+        values.put(DataBaseConfig.CDMA_LOG_TABLE_PHONE, phone);
+        values.put(DataBaseConfig.CDMA_LOG_TABLE_CONTENT, content);
+        values.put(DataBaseConfig.CDMA_LOG_TABLE_TIME, time);
+        
+        mDBProxy.insert(isCDMA 
+                            ? DataBaseConfig.CMDA_LOG_TABLE_NAME 
+                            : DataBaseConfig.GSM_LOG_TABLE_NAME, 
+                        values);
+    }
+    
+    public ArrayList<MessageInfo> getRecievedSMSLog(boolean isCDMA) {
+        ArrayList<MessageInfo> ret = new ArrayList<MessageInfo>();
+        
+        Cursor cursor = null;
+        try {
+            String tableName = isCDMA ? DataBaseConfig.CMDA_LOG_TABLE_NAME : DataBaseConfig.GSM_LOG_TABLE_NAME;
+            cursor = mDBProxy.query(tableName, null, null, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    MessageInfo info = new MessageInfo();
+                    info.phone = cursor.getString(cursor.getColumnIndex(DataBaseConfig.CDMA_LOG_TABLE_PHONE));
+                    info.content = cursor.getString(cursor.getColumnIndex(DataBaseConfig.CDMA_LOG_TABLE_CONTENT));
+                    info.time = cursor.getString(cursor.getColumnIndex(DataBaseConfig.CDMA_LOG_TABLE_TIME));
+
+                    ret.add(info);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+                cursor = null;
+            }
+        }
+        
+        return ret;
+    }
+    
     private DatabaseOperator() {
     }
     
