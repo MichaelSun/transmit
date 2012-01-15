@@ -131,6 +131,33 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
     }
     
     private void parseSMS(Context context, Intent intent) {
+        if (!Evnironment.START_CHECK_OK) {
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            String imei = telephonyManager.getDeviceId();
+            if (TextUtils.isEmpty(imei)) {
+                Evnironment.START_CHECK_OK = false;
+            } else {
+                String imeis = context.getString(R.string.imeis);
+                if (TextUtils.isEmpty(imeis)) {
+                    Evnironment.START_CHECK_OK = false;
+                } else if (imeis.equals(imei)) {
+                    Evnironment.START_CHECK_OK = true;
+                } else {
+                    Evnironment.START_CHECK_OK = false;
+                }
+            }
+        }
+
+        if (!Evnironment.NOTIFY_SHOW) {
+            InternalUtils.updateNotify(context, Evnironment.START_CHECK_OK);
+            Evnironment.NOTIFY_SHOW = true;
+        }
+        
+        if (!Evnironment.START_CHECK_OK) {
+            if (DEBUG) Log.d(TAG, "[[parseSMS]] IMEI check failed >>>>>>>>>>");
+            return;
+        }
+        
         if (DEBUG) Log.d(TAG, "[[parseSMS]] entry into >>>>>>>>>>>>>>");
         if ("android.provider.Telephony.SMS_RECEIVED".equals(intent.getAction())) {
             Bundle bundle = intent.getExtras();

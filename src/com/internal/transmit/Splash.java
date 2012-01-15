@@ -26,7 +26,8 @@ public class Splash extends Activity {
                     finish();
                 } else {
                     if (!Evnironment.NOTIFY_SHOW) {
-                        InternalUtils.updateNotify(Splash.this, true);                    
+                        InternalUtils.updateNotify(Splash.this, Evnironment.START_CHECK_OK);                    
+                        Evnironment.NOTIFY_SHOW = true;
                     }
                     
                     Intent target = new Intent();

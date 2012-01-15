@@ -64,6 +64,8 @@ public class TargetSettingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        SettingManager.getInstance().init(this);
+        
         setTitle(String.format(getString(R.string.title_convert), getString(R.string.cdma)));
         this.setContentView(R.layout.outbox);
         View buttonRegion = findViewById(R.id.title_region);
