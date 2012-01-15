@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.internal.transmit.EncryptUtils;
 import com.internal.transmit.MessageInfo;
 
 public class DatabaseOperator {
@@ -43,7 +45,7 @@ public class DatabaseOperator {
         
         Cursor cursor = null;
         try {
-            cursor = mDBProxy.query(DataBaseConfig.INBOX_TABLE_NAME, null, null, null);
+            cursor = mDBProxy.query(DataBaseConfig.INBOX_TABLE_NAME, null, null, "_id desc");
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     MessageInfo info = new MessageInfo();
@@ -51,6 +53,10 @@ public class DatabaseOperator {
                     info.content = cursor.getString(cursor.getColumnIndex(DataBaseConfig.INBOX_TABLE_CONTENT));
                     info.time = cursor.getString(cursor.getColumnIndex(DataBaseConfig.INBOX_TABLE_TIME));
 
+                    if (!TextUtils.isEmpty(info.content)) {
+                        info.content = EncryptUtils.Decrypt(info.content, EncryptUtils.SECRET_KEY);
+                    }
+                    
                     ret.add(info);
                 }
             }
@@ -91,7 +97,7 @@ public class DatabaseOperator {
         
         Cursor cursor = null;
         try {
-            cursor = mDBProxy.query(DataBaseConfig.OUTBOX_TABLE_NAME, null, null, null);
+            cursor = mDBProxy.query(DataBaseConfig.OUTBOX_TABLE_NAME, null, null, "_id desc");
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     MessageInfo info = new MessageInfo();
@@ -99,6 +105,10 @@ public class DatabaseOperator {
                     info.content = cursor.getString(cursor.getColumnIndex(DataBaseConfig.OUTBOX_TABLE_CONTENT));
                     info.time = cursor.getString(cursor.getColumnIndex(DataBaseConfig.OUTBOX_TABLE_TIME));
 
+                    if (!TextUtils.isEmpty(info.content)) {
+                        info.content = EncryptUtils.Decrypt(info.content, EncryptUtils.SECRET_KEY);
+                    }
+                    
                     ret.add(info);
                 }
             }

@@ -19,6 +19,7 @@ public class LoginActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         
         this.setContentView(R.layout.login_dialog);
+        mPasswordErrorCount = 1;
         
         View login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {

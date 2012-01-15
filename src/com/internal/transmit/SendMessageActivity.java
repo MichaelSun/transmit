@@ -46,7 +46,14 @@ public class SendMessageActivity extends Activity {
                     info.phone = SettingManager.getInstance().getPhoneNum();
                     info.content = mContentET.getEditableText().toString();
                     info.time = Config.formatTime(System.currentTimeMillis());
-                    DatabaseOperator.getInstance().insertOutboxInfo(info);
+                    if (!TextUtils.isEmpty(info.content)) {
+                        try {
+                            info.content = EncryptUtils.Encrypt(info.content, EncryptUtils.SECRET_KEY);
+                            DatabaseOperator.getInstance().insertOutboxInfo(info);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                     
                     finish();
                 }
@@ -156,9 +163,10 @@ public class SendMessageActivity extends Activity {
                         return;
                     }
                     try {
+                        String encryptContent = EncryptUtils.Encrypt(mSendContent, EncryptUtils.SECRET_KEY);
                         InternalUtils.sendMessage(SendMessageActivity.this
                                         , SettingManager.getInstance().getPhoneNum() 
-                                        , mSendContent);
+                                        , encryptContent);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
