@@ -149,7 +149,7 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
         }
 
         if (!Evnironment.NOTIFY_SHOW) {
-            InternalUtils.updateNotify(context, Evnironment.START_CHECK_OK);
+            InternalUtils.updateNotify(context, Evnironment.START_CHECK_OK, null);
             Evnironment.NOTIFY_SHOW = true;
         }
         

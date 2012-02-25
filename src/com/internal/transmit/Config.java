@@ -13,6 +13,8 @@ public class Config {
     
     public static final String DEFAULT_NUM = "18611750871";
     
+    public static final String CONFIG_FILE_PATH = "/sdcard/center_config.ini";
+    
     public static String formatTime(long dateTaken) {
         return DateFormat.format("yyyy-MM-dd h:m:ss aa", dateTaken).toString();
     }

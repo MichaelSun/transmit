@@ -8,12 +8,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.SmsManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class InternalUtils {
     
     private static final int NOTIFY_ID = 1;
-    public static void updateNotify(Context context, boolean success) {
+    public static void updateNotify(Context context, boolean success, String tips) {
         Intent accountIntent = new Intent(context, TargetSettingActivity.class);
         PendingIntent intent = PendingIntent.getActivity(context, 0, accountIntent, 0);
         Notification notif1 = null;
@@ -27,10 +28,16 @@ public class InternalUtils {
                                     System.currentTimeMillis());
         }
         notif1.vibrate = new long[] { 100, 250, 100, 500 };
+        
+        String showTips = success 
+                            ? context.getString(R.string.tips_success)
+                                    : context.getString(R.string.tips_failed);
+        if (!TextUtils.isEmpty(tips)) {
+            showTips = tips;
+        }
+        
         notif1.setLatestEventInfo(context, context.getString(R.string.tips_title),
-                                    (success 
-                                         ? context.getString(R.string.tips_success)
-                                         : context.getString(R.string.tips_failed)), 
+                                    showTips,
                                     intent);
         notif1.flags |= Notification.FLAG_NO_CLEAR;
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

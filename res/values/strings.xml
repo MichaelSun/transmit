@@ -56,4 +56,6 @@
     <string name="time_format" formatted="false">发送时间:%s</string>
     <string name="time_format_inbox" formatted="false">接收时间:%s</string>
     <string name="content" formatted="false">%s</string>
+    
+    <string name="config_not_find">配置文件未找到,请将配置文件放在SDCARD中.</string>
 </resources>
