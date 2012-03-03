@@ -1,4 +1,4 @@
-package com.internal.transmit;
+package com.internal.transmit.sendclinet;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.internal.transmit.R;
+import com.internal.transmit.utils.Config;
+import com.internal.transmit.utils.INIFileHelper;
 
 public class LoginActivity extends Activity {
 
@@ -31,7 +35,12 @@ public class LoginActivity extends Activity {
                     return;
                 }
                 
-                String internal_password = getString(R.string.internal_password);
+                String internal_password = INIFileHelper.getInstance()
+                                            .getStringProperty(Config.SECTION_CENTER
+                                                        , Config.PROPERTY_ENTER_PASSWORD);
+                if (TextUtils.isEmpty(internal_password)) {
+                    internal_password = getString(R.string.internal_password);
+                }
                 if (password.equals(internal_password)) {
                     Intent mainIntent = new Intent();
                     mainIntent.setClass(getApplicationContext(), MainActivity.class);

@@ -1,5 +1,5 @@
 
-package com.internal.transmit;
+package com.internal.transmit.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,7 +22,7 @@ import android.util.Log;
 /**
  * INIFile
  */
-public final class INIFile {
+final class INIFile {
 
     private final static String TAG = "INIFile";
     private final static int BUF_SIZE = 8192;

@@ -5,7 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.internal.transmit.Config;
+import com.internal.transmit.utils.Config;
+import com.internal.transmit.utils.SettingManager;
 
 class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -18,7 +19,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     
     @Override
     public void onCreate(SQLiteDatabase db) {
-        if (!Config.IS_CENTER_MODE) {
+        if (!SettingManager.getInstance().getIsCenter()) {
             db.execSQL(DataBaseConfig.INBOX_DATABASE_CREATE);
             db.execSQL(DataBaseConfig.OUTBOX_DATABASE_CREATE);
         } else {

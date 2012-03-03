@@ -15,14 +15,14 @@ public class SettingManagerActivity extends PreferenceActivity {
         
         this.addPreferencesFromResource(R.xml.setting);
         
-        mNumPreference = (EditTextPreference) findPreference(getResources().getString(R.string.pref_phone_num));
-        mNumPreference.setSummary(SettingManager.getInstance().getPhoneNum());
-        
-        mNumPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            public boolean  onPreferenceChange(Preference preference, Object newValue) {
-                mNumPreference.setSummary(newValue.toString());
-                return true;
-            }
-        });
+//        mNumPreference = (EditTextPreference) findPreference(getResources().getString(R.string.pref_phone_num));
+//        mNumPreference.setSummary(SettingManager.getInstance().getPhoneNum());
+//        
+//        mNumPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+//            public boolean  onPreferenceChange(Preference preference, Object newValue) {
+//                mNumPreference.setSummary(newValue.toString());
+//                return true;
+//            }
+//        });
     }
 }

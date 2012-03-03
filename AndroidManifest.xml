@@ -26,12 +26,12 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="MainActivity" android:label="@string/app_name"></activity>
-        <activity android:name="LoginActivity" android:label="@string/app_name"></activity>
+        <activity android:name=".sendclinet.MainActivity" android:label="@string/app_name"></activity>
+        <activity android:name=".sendclinet.LoginActivity" android:label="@string/app_name"></activity>
         <activity android:name="TargetSettingActivity" android:label="@string/app_name"></activity>
-        <activity android:name="SendMessageActivity" android:label="@string/app_name"></activity>
-        <activity android:name="OutboxActivity" android:label="@string/app_name"></activity>
-        <activity android:name="InboxActivity" android:label="@string/app_name"></activity>
+        <activity android:name=".sendclinet.SendMessageActivity" android:label="@string/app_name"></activity>
+        <activity android:name=".sendclinet.OutboxActivity" android:label="@string/app_name"></activity>
+        <activity android:name=".sendclinet.InboxActivity" android:label="@string/app_name"></activity>
         <activity android:name="SettingManagerActivity" android:label="@string/app_name"></activity>
         <activity android:name="SMSLogActivity" android:label="@string/app_name"></activity>
         

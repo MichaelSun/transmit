@@ -1,4 +1,8 @@
-package com.internal.transmit;
+package com.internal.transmit.sendclinet;
+
+import com.internal.transmit.R;
+import com.internal.transmit.R.id;
+import com.internal.transmit.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,26 +27,26 @@ public class MainActivity extends Activity {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.layout.map_menu, menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.layout.map_menu, menu);
         return true;
     }
     
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.setting).setIcon(R.drawable.menu_setting);
+//        menu.findItem(R.id.setting).setIcon(R.drawable.menu_setting);
         return true;
     }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.setting:
-            Intent intent = new Intent();
-            intent.setClass(this, SettingManagerActivity.class);
-            startActivity(intent);
-            break;
-        }
+//        switch (item.getItemId()) {
+//        case R.id.setting:
+//            Intent intent = new Intent();
+//            intent.setClass(this, SettingManagerActivity.class);
+//            startActivity(intent);
+//            break;
+//        }
         
         return true;
     }

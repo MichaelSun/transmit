@@ -4,9 +4,9 @@
 	<item android:title="@string/add_target" 
 		android:id="@+id/add"/>
 
-	<item android:title="@string/cdma_log" 
+	<!--  item android:title="@string/cdma_log" 
 		android:id="@+id/cdma_log"/>
 
 	<item android:title="@string/gsm_log" 
-		android:id="@+id/gsm_log"/>		
+		android:id="@+id/gsm_log"/ -->		
 </menu>

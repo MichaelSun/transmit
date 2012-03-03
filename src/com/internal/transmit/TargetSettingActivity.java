@@ -2,6 +2,8 @@ package com.internal.transmit;
 
 import java.util.ArrayList;
 
+import com.internal.transmit.utils.SettingManager;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -74,6 +76,12 @@ public class TargetSettingActivity extends Activity {
         mGSMListButton = (Button) buttonRegion.findViewById(R.id.button2);
         mGSMList = SettingManager.getInstance().getGSMTargetList();
         mCDMAList = SettingManager.getInstance().getCDMATargetList();
+        if (mGSMList == null) {
+            mGSMList = new ArrayList<String>();
+        }
+        if (mCDMAList == null) {
+            mCDMAList = new ArrayList<String>();
+        }
         mShowCMDA = true;
         
         mCDMAListButton.setText("CDMA");
@@ -146,6 +154,7 @@ public class TargetSettingActivity extends Activity {
         case R.id.add:
             showAddTargetDialog();
             break;
+        /**
         case R.id.cdma_log:
             {
                 Intent log = new Intent();
@@ -162,6 +171,7 @@ public class TargetSettingActivity extends Activity {
                 startActivity(log);
             }
             break;
+            **/
         }
         
         return true;

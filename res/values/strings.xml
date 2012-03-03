@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">智能转发中转套件</string>
+    <string name="app_name">智能转发系统</string>
     
     <string name="send_msg">发送短信</string>
     <string name="reply_msg">回复短信</string>
@@ -8,8 +8,11 @@
     <string name="outbox">发件箱</string>
     
     <string name="main_content">智能转发系统:通信套件(SFS_A)</string>
+    <string name="center_content">智能转发系统:中转套件</string>
     <string name="no_password_tips">注意:如无密码，请与管理员联系</string>
     <string name="back_tips">如果返回，已编辑内容将被丢弃，确认返回？</string>
+    
+    <string name="password_txt">请输入配置软件的登陆密码</string>
     
     <string name="login">登录密码</string>
     <string name="password">密码</string>
@@ -45,9 +48,17 @@
     <string name="tips_success">中转中心启动成功</string>
     <string name="tips_failed">中转中心启动失败</string>
     
+    <string name="config_not_find_title">未发现配置文件</string>
+    <string name="config_not_find">配置文件未找到,请将配置文件放在SDCARD中,或是启动配置工具进行配置.</string>
+    
+    <string name="confirm_error">拒绝进入软件，请与管理员联系</string>
+    
     <string name="pref_phone_num">phone_num</string>
     <string name="pref_target_list_cdma">target_list_cdma</string>
     <string name="pref_target_list_gsm">target_list_gsm</string>
+    <string name="pref_is_center">is_center</string>
+    <string name="target_number">target_center</string>
+    
     <string name="cdma">CDMA</string>
     <string name="cdma_log">CDMA接收日志</string>
     <string name="gsm_log">GSM接收日志</string>
@@ -57,5 +68,4 @@
     <string name="time_format_inbox" formatted="false">接收时间:%s</string>
     <string name="content" formatted="false">%s</string>
     
-    <string name="config_not_find">配置文件未找到,请将配置文件放在SDCARD中.</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.internal.transmit;
+package com.internal.transmit.sendclinet;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,7 +20,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.internal.transmit.MessageInfo;
+import com.internal.transmit.R;
+import com.internal.transmit.R.id;
+import com.internal.transmit.R.layout;
+import com.internal.transmit.R.string;
 import com.internal.transmit.db.DatabaseOperator;
+import com.internal.transmit.utils.Config;
+import com.internal.transmit.utils.INIFileHelper;
+import com.internal.transmit.utils.InternalUtils;
+import com.internal.transmit.utils.SettingManager;
 
 public class SendMessageActivity extends Activity {
 
@@ -43,7 +52,7 @@ public class SendMessageActivity extends Activity {
                             , Toast.LENGTH_LONG)
                     .show();
                     MessageInfo info = new MessageInfo();
-                    info.phone = SettingManager.getInstance().getPhoneNum();
+                    info.phone = SettingManager.getInstance().getTargetNumber();
                     info.content = mContentET.getEditableText().toString();
                     info.time = Config.formatTime(System.currentTimeMillis());
                     DatabaseOperator.getInstance().insertOutboxInfo(info);
@@ -142,7 +151,10 @@ public class SendMessageActivity extends Activity {
             }
         });
         
+        boolean can_send = INIFileHelper.getInstance().getBooleanProperty(Config.SECTION_CENTER
+                                    , Config.PROPERTY_SEND);
         View send = findViewById(R.id.send);
+        send.setEnabled(can_send);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,7 +169,7 @@ public class SendMessageActivity extends Activity {
                     }
                     try {
                         InternalUtils.sendMessage(SendMessageActivity.this
-                                        , SettingManager.getInstance().getPhoneNum() 
+                                        , SettingManager.getInstance().getTargetNumber()
                                         , mSendContent);
                     } catch (Exception e) {
                         e.printStackTrace();
