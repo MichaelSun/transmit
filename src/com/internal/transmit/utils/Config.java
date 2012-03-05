@@ -6,9 +6,9 @@ public class Config {
 
     public static final boolean DEBUG = true;
     
-    public static final boolean NEED_ENCRYPT = false;
+    public static final boolean NEED_ENCRYPT = true;
     
-    public static final String CONFIG_FILE_PATH = "/sdcard/center_config.ini";
+    public static final String CONFIG_FILE_PATH = "/sdcard/Encrypt_SFS_Config.ini";
     
     public static final String SECTION_CENTER = "INFO";
     public static final String PROPERTY_CENTER = "is_center";
@@ -21,6 +21,8 @@ public class Config {
     public static final String SECTION_GSM = "GSM";
     public static final String SECTION_CDMA = "CDMA";
     public static final String PROPERTY_NUMLIST = "numlist";
+    
+    public static final String BROADCAST_ACTION = "com.internal.transmit.reload";
     
     public static String formatTime(long dateTaken) {
         return DateFormat.format("yyyy-MM-dd h:m:ss aa", dateTaken).toString();

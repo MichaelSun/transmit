@@ -61,7 +61,7 @@ public class SettingManager {
     
     public ArrayList<String> getCDMATargetList() {
         String numlist = INIFileHelper.getInstance().getStringProperty(Config.SECTION_CDMA
-                                        , Config.PROPERTY_NUMLIST);
+                                        , Config.PROPERTY_NUMLIST, ";");
         
         if (!TextUtils.isEmpty(numlist)) {
             ArrayList<String> ret = new ArrayList<String>();
@@ -100,7 +100,7 @@ public class SettingManager {
     
     public ArrayList<String> getGSMTargetList() {
         String numlist = INIFileHelper.getInstance().getStringProperty(Config.SECTION_GSM
-                                        , Config.PROPERTY_NUMLIST);
+                                        , Config.PROPERTY_NUMLIST, ";");
 
         if (!TextUtils.isEmpty(numlist)) {
             ArrayList<String> ret = new ArrayList<String>();

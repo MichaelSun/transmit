@@ -26,7 +26,7 @@
     <string name="btn_delete">删除</string>
     <string name="btn_reply">回复</string>
     
-    <string name="tips_msg_count">0/70</string>
+    <string name="tips_msg_count">0/20</string>
     <string name="tips_new_msg">有新信息</string>
     
     <string name="error_password">密码错误，请联系管理员</string>
@@ -46,10 +46,10 @@
     
     <string name="tips_title">中转中心提示</string>
     <string name="tips_success">中转中心启动成功</string>
-    <string name="tips_failed">中转中心启动失败</string>
+    <string name="tips_failed">手机信息不符,中转中心启动失败</string>
     
     <string name="config_not_find_title">未发现配置文件</string>
-    <string name="config_not_find">配置文件未找到,请将配置文件放在SDCARD中,或是启动配置工具进行配置.</string>
+    <string name="config_not_find">配置SDCARD中的配置文件</string>
     
     <string name="confirm_error">拒绝进入软件，请与管理员联系</string>
     

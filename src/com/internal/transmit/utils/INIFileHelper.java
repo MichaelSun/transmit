@@ -26,6 +26,40 @@ public class INIFileHelper {
         }
     }
     
+    public String getStringProperty(String section, String property, String splitor) {
+        if (TextUtils.isEmpty(section) || TextUtils.isEmpty(property)) {
+            return null;
+        }
+        
+        String data = mINIFile.getStringProperty(section, property);
+        LOGD("[[getStringProperty]] data = " + data + " >>>>>>>>>");
+        if (!TextUtils.isEmpty(data)) {
+            if (Config.NEED_ENCRYPT) {
+                try {
+                    if (!TextUtils.isEmpty(splitor) && data.contains(splitor)) {
+                        String[] strs = data.split(splitor);
+                        StringBuilder strBuilder = new StringBuilder();
+                        for (String str : strs) {
+                            strBuilder.append(EncryptUtils.Decrypt(str, EncryptUtils.SECRET_KEY));
+                            strBuilder.append(splitor);
+                        }
+                        
+                        data = strBuilder.substring(0, strBuilder.length() - 1);
+                    } else {
+                        data = EncryptUtils.Decrypt(data, EncryptUtils.SECRET_KEY);
+                    }
+                    LOGD("[[getStringProperty]] after decrypt +++ data = " + data + " >>>>>>>>>");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            
+            return data;
+        }
+        
+        return null;
+    }
+    
     public String getStringProperty(String section, String property) {
         if (TextUtils.isEmpty(section) || TextUtils.isEmpty(property)) {
             return null;

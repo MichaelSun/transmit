@@ -1,17 +1,16 @@
 package com.internal.transmit.sendclinet;
 
-import com.internal.transmit.R;
-import com.internal.transmit.R.id;
-import com.internal.transmit.R.layout;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+
+import com.internal.transmit.R;
+import com.internal.transmit.utils.Config;
+import com.internal.transmit.utils.INIFileHelper;
 
 public class MainActivity extends Activity {
 
@@ -61,6 +60,8 @@ public class MainActivity extends Activity {
                 startActivity(send_intent);
             }
         });
+        boolean can_send = INIFileHelper.getInstance().getBooleanProperty(Config.SECTION_CENTER, Config.PROPERTY_SEND);
+        send.setEnabled(can_send);
         
         View outbox = findViewById(R.id.outbox);
         outbox.setOnClickListener(new View.OnClickListener() {

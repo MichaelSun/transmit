@@ -135,47 +135,47 @@ public class TargetSettingActivity extends Activity {
         mHandler.sendEmptyMessage(REFRESH_LIST);
     }
     
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.layout.target_menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.layout.target_menu, menu);
+//        return true;
+//    }
     
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.add).setIcon(android.R.drawable.ic_menu_add);
-        return true;
-    }
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//        menu.findItem(R.id.add).setIcon(android.R.drawable.ic_menu_add);
+//        return true;
+//    }
     
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.add:
-            showAddTargetDialog();
-            break;
-        /**
-        case R.id.cdma_log:
-            {
-                Intent log = new Intent();
-                log.setClass(getApplicationContext(), SMSLogActivity.class);
-                log.putExtra(SMSLogActivity.SMS_TYPE, true);
-                startActivity(log);
-            }
-            break;
-        case R.id.gsm_log:
-            {
-                Intent log = new Intent();
-                log.setClass(getApplicationContext(), SMSLogActivity.class);
-                log.putExtra(SMSLogActivity.SMS_TYPE, false);
-                startActivity(log);
-            }
-            break;
-            **/
-        }
-        
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//        case R.id.add:
+//            showAddTargetDialog();
+//            break;
+//        /**
+//        case R.id.cdma_log:
+//            {
+//                Intent log = new Intent();
+//                log.setClass(getApplicationContext(), SMSLogActivity.class);
+//                log.putExtra(SMSLogActivity.SMS_TYPE, true);
+//                startActivity(log);
+//            }
+//            break;
+//        case R.id.gsm_log:
+//            {
+//                Intent log = new Intent();
+//                log.setClass(getApplicationContext(), SMSLogActivity.class);
+//                log.putExtra(SMSLogActivity.SMS_TYPE, false);
+//                startActivity(log);
+//            }
+//            break;
+//            **/
+//        }
+//        
+//        return true;
+//    }
     
     private void showAddTargetDialog() {
         mEditText = new EditText(this);

@@ -11,16 +11,21 @@ import java.security.MessageDigest;
 import java.util.zip.Deflater;
 
 import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import android.util.Log;
 
-class EncryptUtils {
+public class EncryptUtils {
     private static final String TAG = "EncryptUtils";
     
     public static final String SECRET_KEY = "6E09C97EB8798EEB";
     
     public static final String CHARSET = "UTF-8";
+    
+    private static byte[] key1 = { 0x12, 0x34, 0x56, 0x78, (byte) 0x90
+                    , (byte) 0xAB, (byte) 0xCD, (byte) 0xEF, 0x12, 0x34, 0x56, 0x78
+                    , (byte) 0x90, (byte) 0xAB, (byte) 0xCD, (byte) 0xEF };
     
     public static String getMD5Data(byte[] src) {
         try {
@@ -103,8 +108,9 @@ class EncryptUtils {
     public static byte[] Encrypt2Bytes(byte[] sSrc, String sKey) throws Exception {
         byte[] raw = sKey.getBytes(CHARSET);
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        IvParameterSpec iv = new IvParameterSpec(key1);
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 
         byte[] encrypted = cipher.doFinal(sSrc);
         return encrypted;
@@ -112,8 +118,9 @@ class EncryptUtils {
     
     public static String Encrypt(String sSrc, byte[] key) throws Exception {
         SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
-        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        IvParameterSpec iv = new IvParameterSpec(key1);
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 
         byte[] encrypted = cipher.doFinal(sSrc.getBytes());
         return byte2hex(encrypted).toLowerCase();
@@ -127,8 +134,9 @@ class EncryptUtils {
     public static String Decrypt(String sSrc, byte[] key) throws Exception {
         try {
             SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            IvParameterSpec iv = new IvParameterSpec(key1);
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
             byte[] encrypted1 = hex2byte(sSrc.getBytes());
             try {
                 byte[] original = cipher.doFinal(encrypted1);
@@ -155,7 +163,8 @@ class EncryptUtils {
             byte[] raw = sKey.getBytes("UTF-8");
             SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+            IvParameterSpec iv = new IvParameterSpec(key1);
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
             byte[] encrypted1 = hex2byte(sSrc);
             try {
                 byte[] original = cipher.doFinal(encrypted1);

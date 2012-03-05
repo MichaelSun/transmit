@@ -48,10 +48,10 @@ public class Splash extends Activity {
                             Evnironment.NOTIFY_SHOW = true;
                         }
                         
-    //                    Intent target = new Intent();
-    //                    target.setClass(getApplicationContext(), TargetSettingActivity.class);
-    //                    startActivity(target);
-    //                    finish();
+                        Intent target = new Intent();
+                        target.setClass(getApplicationContext(), TargetSettingActivity.class);
+                        startActivity(target);
+                        finish();
                     }
                 }
                 break;

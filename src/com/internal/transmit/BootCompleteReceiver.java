@@ -16,6 +16,8 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        SettingManager.getInstance().init(context);
+        
         File file = new File(Config.CONFIG_FILE_PATH);
         if (!file.exists() || !file.isFile()) {
             InternalUtils.updateNofityForNoConfig(context);

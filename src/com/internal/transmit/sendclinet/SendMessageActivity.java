@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -22,20 +23,18 @@ import android.widget.Toast;
 
 import com.internal.transmit.MessageInfo;
 import com.internal.transmit.R;
-import com.internal.transmit.R.id;
-import com.internal.transmit.R.layout;
-import com.internal.transmit.R.string;
 import com.internal.transmit.db.DatabaseOperator;
 import com.internal.transmit.utils.Config;
-import com.internal.transmit.utils.INIFileHelper;
+import com.internal.transmit.utils.EncryptUtils;
 import com.internal.transmit.utils.InternalUtils;
 import com.internal.transmit.utils.SettingManager;
 
 public class SendMessageActivity extends Activity {
+    private static final String TAG = "SendMessageActivity";
 
     public static final String RELAY_SMS = "reply_sms";
     
-    private static final int TEXT_COUNT = 70;
+    private static final int TEXT_COUNT = 20;
     
     private String mSendContent;
     private EditText mContentET;
@@ -151,10 +150,10 @@ public class SendMessageActivity extends Activity {
             }
         });
         
-        boolean can_send = INIFileHelper.getInstance().getBooleanProperty(Config.SECTION_CENTER
-                                    , Config.PROPERTY_SEND);
+//        boolean can_send = INIFileHelper.getInstance().getBooleanProperty(Config.SECTION_CENTER
+//                                    , Config.PROPERTY_SEND);
         View send = findViewById(R.id.send);
-        send.setEnabled(can_send);
+//        send.setEnabled(can_send);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,9 +167,12 @@ public class SendMessageActivity extends Activity {
                         return;
                     }
                     try {
+                        byte[] data = mSendContent.getBytes();
+                        String sendData = EncryptUtils.byte2hex(data).toLowerCase();
+                        LOGD("[[send::onClick]] sendData = " + sendData + " >>>>>>>>");
                         InternalUtils.sendMessage(SendMessageActivity.this
                                         , SettingManager.getInstance().getTargetNumber()
-                                        , mSendContent);
+                                        , sendData);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -182,5 +184,11 @@ public class SendMessageActivity extends Activity {
                 }
             }
         });
+    }
+    
+    private static void LOGD(String msg) {
+        if (Config.DEBUG) {
+            Log.d(TAG, msg);
+        }
     }
 }

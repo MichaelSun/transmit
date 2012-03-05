@@ -60,6 +60,11 @@ public class Evnironment {
             }
         }
         
-        return Evnironment.START_CHECK_OK;
+        if (Config.NEED_ENCRYPT) {
+            return Evnironment.START_CHECK_OK;
+        } else {
+            return true;
+        }
+        
     }
 }

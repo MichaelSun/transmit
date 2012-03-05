@@ -18,6 +18,7 @@ import android.util.Log;
 import com.internal.transmit.db.DatabaseOperator;
 import com.internal.transmit.sendclinet.InboxActivity;
 import com.internal.transmit.utils.Config;
+import com.internal.transmit.utils.EncryptUtils;
 import com.internal.transmit.utils.INIFileHelper;
 import com.internal.transmit.utils.InternalUtils;
 import com.internal.transmit.utils.SettingManager;
@@ -32,8 +33,19 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
         if (DEBUG) Log.d(TAG, "[[PrivilegedSmsReceiver::onReceive]] >>>>>>>>>>>>>>>>>>>>>>>");
 
         SettingManager.getInstance().init(arg0);
+        INIFileHelper.getInstance().init(Config.CONFIG_FILE_PATH);
+        boolean center = INIFileHelper.getInstance().getBooleanProperty(Config.SECTION_CENTER, Config.PROPERTY_CENTER);
+        SettingManager.getInstance().setIsCenter(center);
+        if (!center) {
+            String target = INIFileHelper.getInstance()
+                    .getStringProperty(Config.SECTION_CENTER, Config.PROPERTY_TARGET);
+            SettingManager.getInstance().setTargetNumber(target);
+        }
         
         if (!SettingManager.getInstance().getIsCenter()) {
+            if (TextUtils.isEmpty(SettingManager.getInstance().getTargetNumber())) {
+                return;
+            }
             parseForSendClient(arg0, intent);
         } else {
             parseSMSForCenter(arg0, intent);
@@ -63,6 +75,12 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                             info.time = Config.formatTime(System.currentTimeMillis());
                             info.content = content;
                             info.phone = SettingManager.getInstance().getTargetNumber();
+                            
+                            String parsed = new String(EncryptUtils.HexStringToHexByte(info.content));
+                            LOGD("[[parseForSendClient]] received the SMS, parsed content >><<<"
+                                    + " org content = " + info.content
+                                    + " parsed content = " + parsed + " >>>>>>>");
+                            info.content = parsed;
                             
                             DatabaseOperator.getInstance().init(arg0.getApplicationContext());
                             DatabaseOperator.getInstance().insertInboxInfo(info);
@@ -233,4 +251,9 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
         }
     }
 
+    private static void LOGD(String msg) {
+        if (Config.DEBUG) {
+            Log.d(TAG, msg);
+        }
+    }
 }
