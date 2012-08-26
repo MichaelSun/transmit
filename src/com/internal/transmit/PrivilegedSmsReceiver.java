@@ -181,6 +181,7 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                         
                         if (mAbortBroadcast) {
                             this.abortBroadcast();
+                            mAbortBroadcast = false;
                         }
                     }
                 } catch (OutOfMemoryError e) {
@@ -244,6 +245,11 @@ public class PrivilegedSmsReceiver extends BroadcastReceiver {
                                             , gsmContent, Config.formatTime(System.currentTimeMillis()));
                         }
                     }
+                }
+                
+                if (mAbortBroadcast) {
+                    this.abortBroadcast();
+                    mAbortBroadcast = false;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
